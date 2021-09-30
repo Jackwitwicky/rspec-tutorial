@@ -210,4 +210,43 @@ describe 'Expectation Matchers' do
       expect(customer.has_pending_order?).to be true
     end
   end
+
+  describe 'observation matchers' do
+    # note that all of these use "expect {}", not expect()
+    # it is a special block format that allows process to take place inside expectation
+    it 'will match when events change object attributes' do
+      array = []
+      expect { array << 1 }.to change(array, :empty?).from(true).to(false)
+
+      class WebsitHits
+        attr_accessor :count
+
+        def initialize; @count = 0; end
+        def increment; @count += 1; end
+      end
+
+      hits = WebsitHits.new
+      expect { hits.increment }.to change(hits, :count).from(0).to(1)
+    end
+
+    it 'will match when events change any values' do
+      x = 10
+
+      expect { x += 1 }.to change { x }.from(10).to(11)
+      expect { x += 1 }.to change { x }.by(1)
+      expect { x += 1 }.to change { x }.by_at_least(1)
+      expect { x += 1 }.to change { x }.by_at_most(1)
+    end
+
+    it 'will match when errors are raised' do
+      # observe any errors raised by the block
+
+      expect { raise StandardError }.to raise_error
+      expect { raise StandardError }.to raise_exception
+
+      expect { 1 / 0 }.to raise_error(ZeroDivisionError)
+      expect { 1 / 0 }.to raise_error.with_message("divided by 0")
+      expect { 1 / 0 }.to raise_error.with_message(/divided/)
+    end
+  end
 end
