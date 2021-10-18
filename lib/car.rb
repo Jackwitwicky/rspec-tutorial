@@ -1,8 +1,7 @@
 class Car
   
-  attr_accessor :make, :year, :color
+  attr_accessor :make, :year, :color, :doors
   attr_reader :wheels
-  attr_writer :doors
   
   def initialize(options={})
     self.make = options[:make] || 'Volvo'
