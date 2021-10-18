@@ -8,6 +8,8 @@ class Car
     self.year = (options[:year] || 2007).to_i
     self.color = options[:color] || 'unknown'
     @wheels = 4
+    self.doors = options[:doors] || 4
+    self.doors = 4 unless [2,4].include?(doors)
   end
   
   def self.colors

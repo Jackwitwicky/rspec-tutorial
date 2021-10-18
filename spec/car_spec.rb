@@ -10,6 +10,26 @@ describe Car do
     expect(subject.doors).to eq(4)
   end
 
+  describe "#initialize" do
+    it "defaults to 4 doors" do
+      expect(subject.doors).to eq(4)
+    end
+
+    it "allows setting a new number of doors" do
+      car = Car.new(doors: 2)
+      expect(car.doors).to eq(2)
+    end
+
+    it "defaults to 4 if option is neither 2 or 4" do
+      door_counts = []
+      [0,1,3,5,6].each do |n|
+        car = Car.new(doors: n)
+        door_counts << car.doors
+      end
+      expect(door_counts).to all( eq(4) )
+    end
+  end
+
   describe '.colors' do
 
     let(:colors) { ['blue', 'black', 'red', 'green'] }
