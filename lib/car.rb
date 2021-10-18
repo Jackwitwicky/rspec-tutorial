@@ -19,5 +19,13 @@ class Car
   def full_name
     "#{self.year.to_s} #{self.make} (#{self.color})"
   end
+
+  def coupe?
+    doors == 2
+  end
+
+  def sedan?
+    doors == 4
+  end
   
 end
